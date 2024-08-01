@@ -1,0 +1,19 @@
+{
+    "KPlugin": {
+        "Authors": [
+            {
+                "Email": "i@xuzhao.net",
+                "Name": "Xu Zhao"
+            }
+        ],
+        "Category": "",
+        "Description": "Ocean Lingmo Theme",
+        "EnabledByDefault": true,
+        "Id": "ocean",
+        "License": "GPLv3",
+        "Name": "Ocean",
+        "Version": "6.0.0",
+        "Website": "https://github.com/xuzhao9/Ocean"
+    },
+    "X-Lingmo-API": "5.0"
+}

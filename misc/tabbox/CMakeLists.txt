@@ -1,0 +1,3 @@
+set(TABBOX_DIR ${KDE_INSTALL_DATADIR}/kwin/tabbox)
+
+install(DIRECTORY ocean      DESTINATION ${TABBOX_DIR})

@@ -1,0 +1,13 @@
+{
+    "KPlugin": {
+        "Name": "Ocean Window Decoration",
+        "Icon": "preferences-system-windows",
+        "Description": "Modify the appearance of window decorations",
+        "ServiceTypes": [
+            "KCModule"
+        ]
+    },
+    "X-KDE-Keywords": "ocean,decoration",
+    "X-KDE-ParentApp": "kcontrol",
+    "X-KDE-Weight": 60
+}
