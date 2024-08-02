@@ -90,6 +90,7 @@ ForegroundVisited=139,74,176
 
 [General]
 Name=Ocean
+Name[zh_CN]=Ocean 海洋浅色
 shadeSortColumn=true
 
 [KDE]

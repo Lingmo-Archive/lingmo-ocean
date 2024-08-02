@@ -1,6 +1,6 @@
 pkgbase=ocean
 pkgname=(ocean)
-pkgver=2.9.0
+pkgver=2.9.0-rc2
 _dirver=$(echo $pkgver | cut -d. -f1-3)
 pkgrel=1
 arch=(x86_64)

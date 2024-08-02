@@ -1,32 +1,42 @@
-cmake_minimum_required(VERSION 3.16)
+cmake_minimum_required(VERSION 3.20)
+
 project(ocean)
-set(PROJECT_VERSION "6.1.80")
+set(PROJECT_VERSION "2.9.0")
 set(PROJECT_VERSION_MAJOR 6)
 
-set(KF5_MIN_VERSION "5.102.0")
-set(KF6_MIN_VERSION "6.2.0")
-set(KDE_COMPILERSETTINGS_LEVEL "5.82")
-set(QT5_MIN_VERSION "5.15.2")
-set(QT_MIN_VERSION "6.6.0")
+set(KF6_MIN_VERSION "6.0.0")
+set(QT_MIN_VERSION "6.4.0")
 
 include(GenerateExportHeader)
 include(WriteBasicConfigVersionFile)
 include(FeatureSummary)
 
-find_package(ECM ${KF5_MIN_VERSION} REQUIRED NO_MODULE)
+find_package(ECM ${KF6_MIN_VERSION} REQUIRED NO_MODULE)
+set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} ${ECM_MODULE_PATH} ${ECM_KDE_MODULE_DIR} ${CMAKE_SOURCE_DIR}/cmake)
+
+include(CMakePackageConfigHelpers)
+include(ECMInstallIcons)
+include(KDEInstallDirs6)
+include(KDECMakeSettings)
+include(KDECompilerSettings NO_POLICY_SCOPE)
+include(KDEClangFormat)
+
+include(GtkUpdateIconCache)
+
+
+find_package(KF6FrameworkIntegration ${KF6_MIN_VERSION} CONFIG )
+set_package_properties(KF${QT_MAJOR_VERSION}FrameworkIntegration PROPERTIES
+    DESCRIPTION "KF6 Framework Integration"
+    URL "https://projects.kde.org/projects/frameworks/frameworkintegration"
+    TYPE OPTIONAL
+    PURPOSE "Required to use KStyle convenience functionalities in style")
+
+#
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} ${ECM_MODULE_PATH}  ${CMAKE_SOURCE_DIR}/cmake)
 
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
-
-# We need this because we can't include KDECMakeSettings here, because that
-# would need KDEInstallDirs, which we can only include in the qt{5,6} builds
-# to get the correct installation dirs for each Qt version.
-option(BUILD_TESTING "Build the testing tree." ON)
-if(BUILD_TESTING)
-    enable_testing()
-endif()
-
+#
 include(CMakePackageConfigHelpers)
 include(ECMInstallIcons)
 include(ECMQtDeclareLoggingCategory)
@@ -36,73 +46,31 @@ include(KDEGitCommitHooks)
 
 include(GtkUpdateIconCache)
 
-
-option(BUILD_QT5 "Build Qt5 style" OFF)
-option(BUILD_QT6 "Build with Qt6" ON)
-
-set(QT_NO_CREATE_VERSIONLESS_TARGETS ON)
-set(QT_NO_CREATE_VERSIONLESS_FUNCTIONS ON)
-
-# For KDE CI only. As the current infrastructure doesn't allow us to set CMAKE options per build variant
-# if($ENV{CI_JOB_NAME_SLUG} MATCHES "qt5")
-#     set(BUILD_QT5 ON)
-#     set(BUILD_QT6 OFF)
-# elseif($ENV{CI_JOB_NAME_SLUG} MATCHES "qt6")
-#     set(BUILD_QT5 OFF)
-#     set(BUILD_QT6 ON)
-# endif()
 set(BUILD_QT6 ON)
 
-function(build_Qt5)
-    set(QT_MAJOR_VERSION 5)
-    include(KDEInstallDirs5)
-    include(KDECMakeSettings)
+option(WITH_DECORATIONS "Build Ocean window decorations for KWin" ON)
+if(WITH_DECORATIONS)
+    find_package(KDecoration2 REQUIRED)
+    add_subdirectory(kdecoration)
+endif()
 
-    find_package(Qt5 ${QT5_MIN_VERSION} REQUIRED CONFIG COMPONENTS Widgets)
+add_subdirectory(colors)
+add_subdirectory(liboceancommon)
+add_subdirectory(kstyle)
+add_subdirectory(misc)
 
-    if(UNIX AND NOT APPLE AND NOT ANDROID)
-        find_package(Qt5 ${QT5_MIN_VERSION} CONFIG REQUIRED DBus)
-        set(HAVE_QTDBUS ${Qt5DBus_FOUND})
+include(ECMSetupVersion)
+ecm_setup_version(${PROJECT_VERSION} VARIABLE_PREFIX OCEAN
+                  PACKAGE_VERSION_FILE "${CMAKE_CURRENT_BINARY_DIR}/OceanConfigVersion.cmake"
+)
 
-        find_package(KF5FrameworkIntegration ${KF5_MIN_VERSION} CONFIG )
-        set_package_properties(KF${QT_MAJOR_VERSION}FrameworkIntegration PROPERTIES
-            DESCRIPTION "KF${QT_MAJOR_VERSION} Framework Integration"
-            URL "https://projects.kde.org/projects/frameworks/frameworkintegration"
-            TYPE OPTIONAL
-            PURPOSE "Required to use KStyle convenience functionalities in style")
+# create a Config.cmake and a ConfigVersion.cmake file and install them
+set(CMAKECONFIG_INSTALL_DIR "${KDE_INSTALL_CMAKEPACKAGEDIR}/Ocean")
 
-        find_package(Qt5 ${QT5_MIN_VERSION} OPTIONAL_COMPONENTS X11Extras)
-        set_package_properties(KF${QT_MAJOR_VERSION}FrameworkIntegration PROPERTIES
-            DESCRIPTION "KF${QT_MAJOR_VERSION} Framework Integration"
-            URL "https://projects.kde.org/projects/frameworks/frameworkintegration"
-            TYPE OPTIONAL
-            PURPOSE "Required to use KStyle convenience functionalities in style")
-    endif()
-
-    find_package(KF5 ${KF5_MIN_VERSION} REQUIRED COMPONENTS
-        CoreAddons
-        Config
-        ConfigWidgets
-        GuiAddons
-        IconThemes
-        WindowSystem)
-
-    find_package(Qt5 ${QT5_MIN_VERSION} OPTIONAL_COMPONENTS Quick)
-    # if(${Qt5Quick_FOUND})
-    #     find_package(KF5 ${KF5_MIN_VERSION} REQUIRED COMPONENTS LingmoUI2)
-    # endif()
-
-    set(OCEAN_HAVE_KSTYLE ${KF5FrameworkIntegration_FOUND})
-    set(OCEAN_HAVE_QTQUICK ${Qt5Quick_FOUND})
-
-    add_subdirectory(kstyle kstyle5)
-    add_subdirectory(liboceancommon liboceancommon5)
-
-    unset(QUERY_EXECUTABLE CACHE)
-endfunction()
-# if(BUILD_QT5)
-#     build_Qt5()
-# endif()
+configure_package_config_file("${CMAKE_CURRENT_SOURCE_DIR}/OceanConfig.cmake.in"
+                              "${CMAKE_CURRENT_BINARY_DIR}/OceanConfig.cmake"
+	                      PATH_VARS KDE_INSTALL_FULL_DATADIR
+                              INSTALL_DESTINATION  ${CMAKECONFIG_INSTALL_DIR})
 
 function(build_Qt6)
     set(QT_MAJOR_VERSION 6)
@@ -211,10 +179,14 @@ function(build_colors_and_cursors)
 endfunction()
 
 build_colors_and_cursors()
-
 # add clang-format target for all our real source files
 file(GLOB_RECURSE ALL_CLANG_FORMAT_SOURCE_FILES *.cpp *.h)
 kde_clang_format(${ALL_CLANG_FORMAT_SOURCE_FILES})
-kde_configure_git_pre_commit_hook(CHECKS CLANG_FORMAT)
+
+install(FILES  "${CMAKE_CURRENT_BINARY_DIR}/OceanConfig.cmake"
+               "${CMAKE_CURRENT_BINARY_DIR}/OceanConfigVersion.cmake"
+        DESTINATION "${CMAKECONFIG_INSTALL_DIR}"
+        COMPONENT Devel
+)
 
 feature_summary(WHAT ALL INCLUDE_QUIET_PACKAGES FATAL_ON_MISSING_REQUIRED_PACKAGES)

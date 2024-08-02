@@ -17,17 +17,12 @@ except ImportError:
 
 sizes = {
 	'horizontal': (
-		(5120, 2880), (3840, 2160), (3200, 2000), (3200, 1800),
-		(2560, 1600), (2560, 1440), (1920, 1200), (1920, 1080),
-		(1680, 1050), (1600, 1200), (1440, 900), (1366, 768),
-		(1280, 1024), (1280, 800), (1024, 768), (440, 247)
-		),
-	'vertical': ((720, 1440), (360, 720), (1080, 1920))
+		(8000, 4500), (4096, 3070)
+		)
 	}
 
 templates = {
 	'horizontal': ('base_size.png', 'base_size.jpg'),
-	'vertical':  ('vertical_base_size.png', 'vertical_base_size.jpg')
 	}
 
 PIL_VERSION: Final = tuple(map(int, PIL.__version__.split(".")))
@@ -62,7 +57,7 @@ def resize_and_save_image(file: Path, image: Image, width: int, height: int) -> 
 
 argument_list: list[tuple] = []
 
-for orientation in ('horizontal', 'vertical'):
+for orientation in ('horizontal'):
 	for file in chain(*map(Path().rglob, templates[orientation])):
 		image = Image.open(file)
 		image.load()

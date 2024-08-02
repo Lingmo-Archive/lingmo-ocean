@@ -229,10 +229,10 @@ namespace Ocean
             _isKonsole = true;
         else if (appName == "kdevelop")
             _isKdevelop = true;
-        else if (appName == "lingmo" || appName.startsWith("lingmo-")
-                || appName == "lingmoshell" // Lingmo5
+        else if (appName == "plasma" || appName.startsWith("plasma-")
+                || appName == "plasmashell" // Plasma5
                 || appName == "kded4") // this is for the infamous appmenu
-            _isLingmo = true;
+            _isPlasma = true;
 
         if( StyleConfigData::opaqueApps().contains(appName, Qt::CaseInsensitive) || StyleConfigData::forceOpaque().contains(appName, Qt::CaseInsensitive) )
             _isOpaque = true;
@@ -339,7 +339,7 @@ namespace Ocean
                     && !widget->inherits("KScreenSaver")
                     && !widget->inherits("QSplashScreen"))
                 {
-                    //if( _isLingmo && !qobject_cast<QDialog*>(widget) ) break;
+                    //if( _isPlasma && !qobject_cast<QDialog*>(widget) ) break;
                     if( !_helper->compositingActive() ) break; //TODO: remove alpha
                     if( widget->windowFlags().testFlag( Qt::FramelessWindowHint ) ) break;
                     
@@ -8196,7 +8196,7 @@ namespace Ocean
         
         else
         {
-            if ( _isLingmo || _isOpaque || !widget->isWindow() || !_helper->shouldWindowHaveAlpha( widget->palette(), _isDolphin )) return;
+            if ( _isPlasma || _isOpaque || !widget->isWindow() || !_helper->shouldWindowHaveAlpha( widget->palette(), _isDolphin )) return;
             
             switch (widget->windowFlags() & Qt::WindowType_Mask) {
             case Qt::Window:
@@ -8261,7 +8261,7 @@ namespace Ocean
         if (!tb
             || w->autoFillBackground()
             || w->testAttribute(Qt::WA_StyleSheetTarget) // not drawn by Kvantum (CE_ToolBar may not be called)
-            || _isLingmo)
+            || _isPlasma)
         {
             return false;
         }

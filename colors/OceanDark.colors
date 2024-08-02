@@ -27,18 +27,18 @@ IntensityAmount=0
 IntensityEffect=0
 
 [Colors:Button]
-BackgroundAlternate=30,87,116
-BackgroundNormal=49,54,59
-DecorationFocus=61,174,233
-DecorationHover=61,174,233
-ForegroundActive=61,174,233
-ForegroundInactive=161,169,177
-ForegroundLink=29,153,243
-ForegroundNegative=218,68,83
-ForegroundNeutral=246,116,0
-ForegroundNormal=252,252,252
-ForegroundPositive=39,174,96
-ForegroundVisited=155,89,182
+BackgroundAlternate=252,252,252
+BackgroundNormal=250,250,250
+DecorationFocus=71,90,121
+DecorationHover=201,226,255
+ForegroundActive=0,102,255
+ForegroundInactive=150,150,150
+ForegroundLink=82,118,217
+ForegroundNegative=223,49,49
+ForegroundNeutral=236,145,39
+ForegroundNormal=16,16,16
+ForegroundPositive=34,161,87
+ForegroundVisited=139,74,176
 
 [Colors:Complementary]
 BackgroundAlternate=30,87,116
@@ -191,12 +191,12 @@ Name[tg]=Насими торик
 Name[tr]=Esinti Koyu
 Name[uk]=Темна Ocean
 Name[x-test]=xxOcean Darkxx
-Name[zh_CN]=Ocean 微风深色
-Name[zh_TW]=Ocean Dark
+Name[zh_CN]=Ocean 海洋深色
+Name[zh_TW]=Ocean 海洋Dark
 shadeSortColumn=true
 
 [KDE]
-contrast=4
+contrast=10
 
 [WM]
 activeBackground=49,54,59

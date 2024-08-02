@@ -7,7 +7,7 @@
             }
         ],
         "Category": "",
-        "Description": "Ocean Lingmo Theme",
+        "Description": "Ocean Plasma Theme",
         "EnabledByDefault": true,
         "Id": "ocean",
         "License": "GPLv3",
@@ -15,5 +15,5 @@
         "Version": "6.0.0",
         "Website": "https://github.com/xuzhao9/Ocean"
     },
-    "X-Lingmo-API": "5.0"
+    "X-Plasma-API": "5.0"
 }

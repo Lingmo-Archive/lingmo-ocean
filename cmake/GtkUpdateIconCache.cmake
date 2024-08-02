@@ -1,7 +1,11 @@
-# SPDX-FileCopyrightText: 2015 Volker Krause <vkrause@kde.org>
+# Copyright 2015 Volker Krause <vkrause@kde.org>
 #
-# SPDX-License-Identifier: BSD-3-Clause
-
+# Distributed under the OSI-approved BSD License (the "License");
+# see accompanying file COPYING-CMAKE-SCRIPTS for details.
+#
+# This software is distributed WITHOUT ANY WARRANTY; without even the
+# implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+# See the License for more information.
 
 find_program(GTK_UPDATE_ICON_CACHE_EXECUTABLE NAMES gtk-update-icon-cache)
 

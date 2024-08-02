@@ -8,10 +8,10 @@
  */
 import QtQuick 2.15
 import QtQuick.Layouts 1.15
-import org.kde.lingmo.core as LingmoCore
+import org.kde.plasma.core as PlasmaCore
 import org.kde.kirigami 2.20 as Kirigami
 import org.kde.ksvg 1.0 as KSvg
-import org.kde.lingmo.components 3.0 as LingmoComponents3
+import org.kde.plasma.components 3.0 as PlasmaComponents3
 import org.kde.kwin 3.0 as KWin
 
 KWin.TabBoxSwitcher {
@@ -19,8 +19,8 @@ KWin.TabBoxSwitcher {
 
     currentIndex: icons.currentIndex
 
-    LingmoCore.Dialog {
-        location: LingmoCore.Types.Floating
+    PlasmaCore.Dialog {
+        location: PlasmaCore.Types.Floating
         visible: tabBox.visible
         flags: Qt.X11BypassWindowManagerHint
         x: tabBox.screenGeometry.x + tabBox.screenGeometry.width * 0.5 - dialogMainItem.width * 0.5
@@ -83,7 +83,7 @@ KWin.TabBoxSwitcher {
                 boundsBehavior: Flickable.StopAtBounds
             }
 
-            LingmoComponents3.Label {
+            PlasmaComponents3.Label {
                 text: icons.currentItem ? icons.currentItem.caption : ""
                 textFormat: Text.PlainText
                 horizontalAlignment: Text.AlignHCenter
