@@ -1,3 +1,3 @@
-find_package(Plasma REQUIRED)
+find_package(Lingmo REQUIRED)
 
-install(DIRECTORY Ocean DESTINATION ${PLASMA_DATA_INSTALL_DIR}/desktoptheme)
+install(DIRECTORY Ocean DESTINATION ${LINGMO_DATA_INSTALL_DIR}/desktoptheme)

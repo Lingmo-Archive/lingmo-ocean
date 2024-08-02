@@ -127,7 +127,7 @@ if(OCEAN_HAVE_X11)
 endif()
 
 if(OCEAN_HAVE_KWAYLAND)
-    target_link_libraries(ocean Plasma::KWaylandClient)
+    target_link_libraries(ocean Lingmo::KWaylandClient)
 endif()
 
 

@@ -418,7 +418,7 @@ namespace Ocean
         if( widget->inherits( "QComboBoxPrivateContainer" ) ) return true;
 
         // tooltips
-        if( isToolTip( widget ) && !widget->inherits( "Plasma::ToolTip" ) )
+        if( isToolTip( widget ) && !widget->inherits( "Lingmo::ToolTip" ) )
         { return true; }
 
         // detached widgets

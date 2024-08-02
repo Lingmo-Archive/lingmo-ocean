@@ -5,16 +5,16 @@ widgetStyle=Ocean
 ColorScheme=Ocean
 
 [kdeglobals][Icons]
-Theme=breeze
+Theme=ocean
 
-[plasmarc][Theme]
+[lingmorc][Theme]
 name=Ocean
 
 [Wallpaper]
 Image=Next
 
 [kcminputrc][Mouse]
-cursorTheme=breeze_cursors
+cursorTheme=ocean_cursors
 
 [kwinrc][org.kde.kdecoration2]
 library=org.kde.Ocean

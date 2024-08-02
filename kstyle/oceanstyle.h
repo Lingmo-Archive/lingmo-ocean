@@ -557,9 +557,9 @@ namespace Ocean
         //* set of transparent widgets (as defined in ::polish)
         QSet<QWidget*> _translucentWidgets;
         
-        //* LibreOffice and Plasma need workarounds.
+        //* LibreOffice and Lingmo need workarounds.
         bool _isLibreoffice = false;
-        bool _isPlasma = false;
+        bool _isLingmo = false;
         bool _isDolphin = false;
         bool _isKonsole = false;
         bool _isKdevelop = false;
